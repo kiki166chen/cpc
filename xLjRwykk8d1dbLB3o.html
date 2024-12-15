@@ -1,0 +1,261 @@
+<html><head><base href="." /><meta charset="UTF-8"><style>
+:root {
+  --primary-color: #4CAF50;
+  --secondary-color: #2196F3;
+  --accent-color: #FF9800;
+  --background-color: #E8F5E9;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: var(--background-color);
+}
+
+#game-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.scene {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: opacity 1s;
+  display: none;
+}
+
+.scene.active {
+  display: block;
+}
+
+.instruction-page {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 800px;
+  margin: 2rem auto;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.start-button, .next-button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin: 1rem;
+}
+
+.start-button:hover, .next-button:hover {
+  transform: scale(1.05);
+}
+
+.character {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  transition: all 0.5s;
+}
+
+.dialogue-box {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 80%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.store-front {
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px var(--primary-color)); }
+  to { filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px var(--primary-color)); }
+}
+
+.sprite {
+  will-change: transform;
+  transition: transform 0.3s;
+}
+
+.sprite:hover {
+  transform: scale(1.1);
+}
+
+.instruction-container {
+  display: none;
+}
+
+.instruction-container.active {
+  display: block;
+}
+</style>
+</head>
+<body>
+<div id="game-container">
+  <div id="instructions" class="scene active">
+    <div id="instruction-page-1" class="instruction-container active">
+      <div class="instruction-page">
+        <h1>氣候魔法工坊 - 遊戲說明 (1/3)</h1>
+        
+        <h2>遊戲目標</h2>
+        <p>在這個充滿魔法的冒險中，你將扮演小樂，透過與神奇商店的互動，學習並運用各種環保魔法道具來保護地球！</p>
+        
+        <h2>操作方法</h2>
+        <ul>
+          <li>點擊畫面：與角色對話、進行互動</li>
+          <li>滑鼠移動：探索場景</li>
+          <li>按下Enter鍵：進入下一個場景或對話</li>
+        </ul>
+
+        <button class="next-button" onclick="showNextInstruction(1)">下一頁</button>
+      </div>
+    </div>
+
+    <div id="instruction-page-2" class="instruction-container">
+      <div class="instruction-page">
+        <h1>氣候魔法工坊 - 遊戲說明 (2/3)</h1>
+
+        <h2>遊戲特色</h2>
+        <ul>
+          <li>四大氣候精靈的獨特能力</li>
+          <li>神奇環保道具的收集與運用</li>
+          <li>創意解謎對抗污染怪獸</li>
+          <li>即時互動的環境保護任務</li>
+        </ul>
+
+        <h2>道具介紹</h2>
+        <ul>
+          <li>智慧風力手環：產生清潔能源，驅散熱浪</li>
+          <li>淨水魔法瓶：淨化污染水源，對抗洪水</li>
+          <li>陽光衣：收集太陽能，提供永續能源</li>
+          <li>生態修復種子：恢復自然生態，淨化空氣</li>
+        </ul>
+
+        <button class="next-button" onclick="showNextInstruction(2)">下一頁</button>
+      </div>
+    </div>
+
+    <div id="instruction-page-3" class="instruction-container">
+      <div class="instruction-page">
+        <h1>氣候魔法工坊 - 遊戲說明 (3/3)</h1>
+
+        <h2>遊戲進程</h2>
+        <ol>
+          <li>探索神奇商店</li>
+          <li>與氣候精靈互動學習</li>
+          <li>收集環保魔法道具</li>
+          <li>解決環境危機</li>
+          <li>成為氣候守護者</li>
+        </ol>
+
+        <button class="start-button" onclick="startGame()">開始冒險</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="scene1" class="scene">
+    <svg width="100%" height="100%" viewBox="0 0 1000 600">
+      <!-- 街道背景 -->
+      <rect x="0" y="0" width="1000" height="600" fill="#87CEEB"/>
+      <rect x="0" y="400" width="1000" height="200" fill="#808080"/>
+      
+      <!-- 商店外觀 -->
+      <g class="store-front">
+        <rect x="300" y="100" width="400" height="400" fill="#FFE4C4"/>
+        <rect x="450" y="300" width="100" height="200" fill="#8B4513"/>
+        <text x="400" y="200" font-size="24" fill="#4CAF50">氣候魔法工坊</text>
+      </g>
+
+      <!-- 小樂角色 -->
+      <g class="sprite" id="player">
+        <circle cx="200" cy="450" r="30" fill="#FFB6C1"/>
+        <circle cx="200" cy="400" r="20" fill="#FFA07A"/>
+      </g>
+    </svg>
+    <div class="dialogue-box" id="dialogue">
+      點擊畫面開始冒險...
+    </div>
+  </div>
+</div>
+
+<script>
+let currentScene = 0;
+let currentDialogue = 0;
+const gameState = {
+  inventory: [],
+  position: {x: 200, y: 450}
+};
+
+function showNextInstruction(currentPage) {
+  document.getElementById(`instruction-page-${currentPage}`).classList.remove('active');
+  document.getElementById(`instruction-page-${currentPage + 1}`).classList.add('active');
+}
+
+function startGame() {
+  document.getElementById('instructions').classList.remove('active');
+  document.getElementById('scene1').classList.add('active');
+  currentScene = 1;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const gameContainer = document.getElementById('game-container');
+  const player = document.getElementById('player');
+  const dialogue = document.getElementById('dialogue');
+
+  const dialogues = [
+    "點擊畫面開始冒險...",
+    "店長多比：「歡迎來到氣候魔法工坊！這裡有改變世界的力量，你想看看嗎？」",
+    "小樂：「好啊！請告訴我更多關於這裡的事情！」",
+    "店長多比：「那就讓我帶你參觀吧！」"
+  ];
+
+  gameContainer.addEventListener('click', (e) => {
+    if (currentScene === 1) {
+      if (currentDialogue === 0) {
+        dialogue.textContent = dialogues[1];
+        animatePlayerToStore();
+        currentDialogue++;
+      }
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && currentScene === 1 && currentDialogue > 0) {
+      currentDialogue++;
+      if (currentDialogue < dialogues.length) {
+        dialogue.textContent = dialogues[currentDialogue];
+      } else {
+        loadScene2();
+      }
+    }
+  });
+
+  function animatePlayerToStore() {
+    const playerAnimation = player.animate([
+      { transform: 'translateX(0)' },
+      { transform: 'translateX(250px)' }
+    ], {
+      duration: 2000,
+      fill: 'forwards'
+    });
+  }
+
+  function loadScene2() {
+    console.log("Loading scene 2...");
+  }
+});
+</script>
+</body></html>
